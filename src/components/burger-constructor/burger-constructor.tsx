@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from '../../services/store';
 import { createOrder, clearOrder } from '../../services/new-order';
-import { clearConstructor } from '../../services/constructor';
 import { FC, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TConstructorIngredient } from '@utils-types';
@@ -40,7 +39,6 @@ export const BurgerConstructor: FC = () => {
 
   const closeOrderModal = () => {
     dispatch(clearOrder());
-    dispatch(clearConstructor());
   };
 
   const price = useMemo(

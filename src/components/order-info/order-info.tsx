@@ -20,7 +20,13 @@ export const OrderInfo: FC = () => {
   const ingredients = useSelector((state) => state.ingredients.ingredients);
 
   const orderInfo = useMemo(() => {
-    if (!orderData || !ingredients.length) return null;
+    if (
+      !orderData ||
+      !ingredients.length ||
+      orderData.number !== Number(number)
+    ) {
+      return null;
+    }
 
     const date = new Date(orderData.createdAt);
 
@@ -58,7 +64,7 @@ export const OrderInfo: FC = () => {
       date,
       total
     };
-  }, [orderData, ingredients]);
+  }, [orderData, ingredients, number]);
 
   if (!orderInfo) {
     return <Preloader />;

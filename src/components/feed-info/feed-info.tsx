@@ -12,10 +12,13 @@ const getOrders = (orders: TOrder[], status: string): number[] =>
 
 export const FeedInfo: FC = () => {
   const orders = useSelector((state) => state.feed.orders);
-  const feed = useSelector((state) => ({
-    total: state.feed.total,
-    totalToday: state.feed.totalToday
-  }));
+  const total = useSelector((state) => state.feed.total);
+  const totalToday = useSelector((state) => state.feed.totalToday);
+
+  const feed = {
+    total,
+    totalToday
+  };
 
   const readyOrders = getOrders(orders, 'done');
   const pendingOrders = getOrders(orders, 'pending');

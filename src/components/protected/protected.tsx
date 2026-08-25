@@ -1,6 +1,7 @@
 import { FC, ReactElement } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from '../../services/store';
+import { Preloader } from '@ui';
 
 type ProtectedProps = {
   children: ReactElement;
@@ -10,17 +11,19 @@ type ProtectedProps = {
 export const Protected: FC<ProtectedProps> = ({ children, onlyGuest }) => {
   const user = useSelector((state) => state.user.user);
   const isChecked = useSelector((state) => state.user.isChecked);
+  const location = useLocation();
 
   if (!isChecked) {
-    return null;
+    return <Preloader />;
   }
 
   if (!onlyGuest && !user) {
-    return <Navigate to='/login' replace />;
+    return <Navigate to='/login' state={{ from: location }} replace />;
   }
 
   if (onlyGuest && user) {
-    return <Navigate to='/' replace />;
+    const from = location.state?.from?.pathname || '/';
+    return <Navigate to={from} replace />;
   }
 
   return children;
